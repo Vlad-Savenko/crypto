@@ -1,11 +1,18 @@
 
 const Services = () => {
 
-  const getCrypto = async(cout) => {
-    const res = await fetch(`https://api.coincap.io/v2/assets?limit=${cout}`)
-    const data = await res.json()
-    return data.data
-  }
+  const getCrypto = async (count) => {
+    try {
+      const res = await fetch(`https://api.coincap.io/v2/assets?limit=${count}`);
+      const data = await res.json();
+      return data.data;
+    } catch (error) {
+      console.error('Помилка запиту до API:', error);
+      throw error; // Якщо виникає помилка, викидаємо її далі
+    }
+  };
+  
+  // Запускаємо запит кожні 3 секунди
 
 
   const getOneCrypto = async(id) => {
