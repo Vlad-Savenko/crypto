@@ -11,7 +11,7 @@ function App() {
     <Router>
       <div className="App">
         <AppHeader />
-        <main className='bg-gray-100 w-full flex'>
+        <main className='bg-gray-100 w-full flex '>
           <Routes>
             <Route path="/main" element={<MainContent />} />
             <Route path="/crypto" element={<CryptoPage />} />

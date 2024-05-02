@@ -8,7 +8,7 @@ const Services = () => {
       return data.data;
     } catch (error) {
       console.error('Помилка запиту до API:', error);
-      throw error; // Якщо виникає помилка, викидаємо її далі
+      throw error;
     }
   };
   
@@ -16,14 +16,47 @@ const Services = () => {
 
 
   const getOneCrypto = async(id) => {
-    const res = await fetch(`https://api.coincap.io/v2/assets/${id}`)
-    const data = await res.json()
-    return data.data
+    try {
+      const res = await fetch(`https://api.coincap.io/v2/assets/${id}`)
+      const data = await res.json()
+      return data.data
+    } catch (error) {
+      console.error('Помилка запиту до API:', error);
+      throw error; 
+    }
   }
 
+  const getMarkets = async(count) => {
+    try {
+      const res = await fetch(`https://api.coincap.io/v2/assets/bitcoin/markets?limit=${count}`)
+      const data = await res.json()
+      return data.data
+    } catch (error) {
+      console.error('Помилка запиту до API:', error);
+      throw error; 
+    }
+  }
+
+
+  const getPairs = async(id) => {
+    try {
+      if(id) {
+        const res = await fetch(`https://api.coincap.io/v2/exchanges/${id}`)
+        const data = await res.json()
+        return data.data
+      }
+    } catch (error) {
+      console.error('Помилка запиту до API:', error);
+      throw error; 
+    }
+  }
+  
+
   return {
+    getMarkets,
     getCrypto,
     getOneCrypto,
+    getPairs,
   }
 }
 export default Services;

@@ -1,0 +1,184 @@
+import { useState,useEffect } from "react";
+import Services from "../../services/Services";
+
+const BirgeList = () => {
+    const [coins, setCoins] = useState([]);
+    const [prevCoins, setPrevCoins] = useState();
+
+    const { getCrypto } = Services();
+
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            updateInfo(coins);
+        }, 3000);
+        return () => {
+            clearInterval(intervalId);
+        };
+    },[]);
+
+    // useEffect(() => {
+    //     if (coins.length > 0 && prevCoins.length > 0) {
+    //         console.log("Попередні монети:", prevCoins[0].priceUsd);
+    //         console.log("Поточні монети:", coins[0].priceUsd);
+    //     }
+    // }, [coins, prevCoins]);
+
+    const onLoadedCrypto = (coins) => {
+        setCoins(coins)
+    };
+
+    const onUpdateCrypto = (item) => {
+        setPrevCoins()
+    }
+    const  updateInfo   =  async  (coins)  =>  {
+         getCrypto(20)
+            .then(onLoadedCrypto)
+            .then(onUpdateCrypto(coins))
+            .then(setInterval)
+    };
+
+    return (
+        <>
+        <div>{prevCoins}</div>
+        </>
+    )
+}
+export default BirgeList;
+
+/////////////
+const ref = useRef();
+  
+useEffect(() => {
+  ref.current = value;
+}, [value]);
+
+return ref.current;
+};
+
+const BirgeList = () => {
+const [coins, setCoins] = useState([]);
+const [prevCoins, setPrevCoins] = useState();
+
+const { getCrypto } = Services();
+
+useEffect(() => {
+  const intervalId = setInterval(() => {
+    updateInfo(coins);
+  }, 3000);
+
+  return () => {
+    clearInterval(intervalId);
+  };
+}, []);
+
+const changes = (coins,prevCoin) => {
+    console.log(coins[0].priceUsd)
+    console.log(prevCoin[0].priceUsd)
+}
+
+const prevCoin = usePrevious(coins);
+useEffect(() => {
+  setPrevCoins(prevCoin);
+}, [prevCoin]);
+
+const onLoadedCrypto = (coins) => {
+  setCoins(coins);
+};
+
+const updateInfo = async (coins) => {
+  getCrypto(20)
+    .then(onLoadedCrypto)
+    .then(changes(coins,prevCoin))
+    .catch((error) => console.error(error));
+
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import { useState,useEffect,useRef } from "react";
+import Services from "../../services/Services";
+
+const BirgeList = () => {
+    const [coins, setCoins] = useState([]);
+    const [prevCoins, setPrevCoins] = useState([]);
+
+    const { getCrypto } = Services();
+
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            updateInfo(coins);
+        }, 5000);
+        return () => {
+            clearInterval(intervalId);
+        };
+    },[]);
+
+    function usePrevious(value) {
+        const ref = useRef();
+      
+        useEffect(() => {
+          ref.current = value;
+        }, [value]);
+      
+        return ref.current;
+      }
+
+    // const addNewProperty = (arr) => {
+    //     arr.forEach(coin => {
+    //         coin.newProperty = coin.priceUsd;
+    //       });
+    //       return arr
+    // };
+
+
+    // const onLoadedCrypto = (coins) => {
+    //     if(coins.length > 0) {
+    //         addNewPropertyInMasive(coins)
+    //     }
+    // }
+
+
+    // const addNewPropertyInMasive = (array) => {
+    //     const arr = addNewProperty(array)
+    //     console.log(arr)
+    //     setPrevCoins(arr)
+
+    // }
+    const newCoinsLoaded = (coins) => {
+        setCoins(coins)
+    }
+
+
+    const  updateInfo   =  async  (coins)  =>  {
+         getCrypto(20)
+         .then(newCoinsLoaded(coins))
+         .then()
+         console.log(1)
+    };
+
+    return (
+        <>
+        <h1>123</h1>
+        </>
+    )
+}
+export default BirgeList;
