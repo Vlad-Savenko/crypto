@@ -73,7 +73,7 @@ const CryptoList = () => {
                                     </div>
                                 </div>
                         </div>
-                            {coins.map(({id, name,marketCapUsd,priceUsd,volumeUsd24Hr,explorer,symbol,statusCalculated},i) => {
+                            {coins.map(({id, name,marketCapUsd,priceUsd,volumeUsd24Hr,explorer,symbol},i) => {
 
                             let textStyle = {fontSize: '20px'}
 
@@ -98,7 +98,6 @@ const CryptoList = () => {
                                     </div>
                                 </div>
                                 </Link>
-                                <div>{statusCalculated}</div>
                             </div>
                         )
                     })}

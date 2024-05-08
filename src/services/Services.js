@@ -50,6 +50,20 @@ const Services = () => {
       throw error; 
     }
   }
+
+
+  const getTrades = async(id) => {
+    try {
+      if(id) {
+        const res = await fetch(`wss://ws.coincap.io/trades/binance`)
+        const data = await res.json()
+        return data.data
+      }
+    } catch (error) {
+      console.error('Помилка запиту до API:', error);
+      throw error; 
+    }
+  }
   
 
   return {
