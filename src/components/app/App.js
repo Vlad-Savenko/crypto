@@ -19,7 +19,7 @@ function App() {
             <Route path="/crypto" element={<CryptoPage />} />
             <Route path='/crypto/:cryptoId' element={<CryptoInfo/>}></Route>
             <Route path="/exchanges" element={<BirgeList />}></Route>
-            <Route path='/exchange/:id' element={<ExchangeInfo/>}></Route>
+            <Route path='/exchange/:exchangeID' element={<ExchangeInfo/>}></Route>
           </Routes>
         </main>
       </div>

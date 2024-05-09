@@ -52,13 +52,11 @@ const Services = () => {
   }
 
 
-  const getTrades = async(id) => {
+  const getOneExchange = async(id) => {
     try {
-      if(id) {
-        const res = await fetch(`wss://ws.coincap.io/trades/binance`)
-        const data = await res.json()
-        return data.data
-      }
+      const res = await fetch(`https://api.coincap.io/v2/exchanges/${id}`)
+      const data = await res.json()
+      return data.data
     } catch (error) {
       console.error('Помилка запиту до API:', error);
       throw error; 
@@ -67,6 +65,7 @@ const Services = () => {
   
 
   return {
+    getOneExchange,
     getMarkets,
     getCrypto,
     getOneCrypto,

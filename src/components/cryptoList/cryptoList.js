@@ -42,19 +42,6 @@ const CryptoList = () => {
         console.log('update');
     };
 
-
-    // let color  = {}
-
-    // const changeColor = (coins) => {
-    //     coins.forEach((element,i) => {
-    //         if(element.statusCalculated === 'true') {
-    //             console.log('Price is less ')
-    //         } if (element.statusCalculated === 'false') {
-    //             console.log('Price is more ')
-    //         }
-    //     })
-    // }
-
     return (
         <div className="Crypto w-full">
                 <h1 className="text-8xl text-center">CryptoList</h1>

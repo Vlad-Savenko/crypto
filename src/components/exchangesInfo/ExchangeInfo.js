@@ -1,39 +1,44 @@
 import { useState,useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 import Services from "../../services/Services";
+
 
 const ExchangeInfo = () => {
 
     const [markets, setMarkets] = useState([]);
-    const { getMarkets, getPairs } = Services();
+    const { getMarkets, getPairs,getOneExchange } = Services();
+    const {exchangeID} = useParams();
   
     useEffect(() => {
       updateInfo();
-    }, []);
+    }, [exchangeID]);
+
   ////////////////////////////////////////////1
     const addNewProperty = async (markets) => {
       let arr = [];
-      for (const item of markets) {
-        const str = await item.exchangeId.toLowerCase();
-        const pairs = await getPairs(str);
-        arr.push(pairs);
-      }
+      const str = await markets.exchangeId.toLowerCase();
+      const pairs = await getPairs(str);
+      arr = pairs;
+
       compareCount(arr, markets);
+
+      
     };
   
     const compareCount = (arr, markets) => {
-      if(markets) {
-        markets.forEach((item, i) => {
-          if (item && arr[i]) {
-            if (item.exchangeId.toLowerCase() === arr[i].exchangeId) {
-              item.tradingPairs = arr[i].tradingPairs;
-              item.exchangeUrl = arr[i].exchangeUrl
-            }
+      if (Array.isArray(markets) && Array.isArray(arr)) {
+        const updatedMarkets = markets.map((market) => {
+          const foundPair = arr.find((pair) => pair.exchangeId.toLowerCase() === market.exchangeId.toLowerCase());
+          if (foundPair) {
+            market.tradingPairs = foundPair.tradingPairs;
+            market.exchangeUrl = foundPair.exchangeUrl;
           } else {
-            item.tradingPairs = 'NaN';
+            market.tradingPairs = 'NaN';
           }
-          setMarkets([...markets]);
+          return market;
         });
+        setMarkets(updatedMarkets);
       }
     };
   
@@ -42,14 +47,24 @@ const ExchangeInfo = () => {
     };
   
     const updateInfo = async () => {
-      const markets = await getMarkets(10);
-      await onLoadedMarkets(markets);
-      await addNewProperty(markets)
+      const markets = await getOneExchange(exchangeID);
+      if (markets) { // Додайте перевірку на undefined перед використанням marketsData
+        await onLoadedMarkets(markets);
+        await addNewProperty(markets);
+      }
     };
-
+    const {name,rank,exchangeId,percentTotalVolume,volumeUsd,tradingPairs,exchangeUrl} = markets;
     return(
-        <h1>asd</h1>
-    )
+      <>
+        <div>{name}</div>
+        <div>{rank}</div>
+        <div>{exchangeId}</div>
+        <div>{percentTotalVolume}</div>
+        <div>{volumeUsd}</div>
+        <div>{tradingPairs}</div>
+        <div>{exchangeUrl}</div>
+      </>
+    ) 
 }
 
 export default ExchangeInfo;
